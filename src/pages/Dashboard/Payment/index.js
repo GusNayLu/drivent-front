@@ -5,11 +5,54 @@ export default function Payment() {
   return (
     <>
       <StyledTypography variant="h4">Ingresso e pagamento</StyledTypography>
-      <p>Primeiro, escolha sua modalidade de ingresso</p>
+      <Advise>Primeiro, escolha sua modalidade de ingresso</Advise>
+      <Container>
+        <Ingresso>
+          <h6>Presencial</h6>
+          <p>R$ 100</p>
+        </Ingresso>
+        <Ingresso>
+          <h6>Presencial</h6>
+          <p>R$ 100</p>
+        </Ingresso>
+      </Container>
     </>
   );
 }
 
 const StyledTypography = styled(Typography)`
   margin-bottom: 20px !important;
+`;
+
+const Advise = styled.p`
+  font-size: 20px;
+  color: #8e8e8e;
+`;
+
+const Container = styled.div`
+  display: flex;
+`;
+
+const Ingresso = styled.div`
+  border: 1px solid #cecece;
+  border-radius: 20px;
+  height: 145px;
+  width: 145px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-right: 25px;
+
+  h6 {
+    font-size: 16px;
+    color: #454545;
+    margin-bottom: 8px;
+  }
+
+  p {
+    font-size: 14px;
+    color: #898989;
+  }
 `;
