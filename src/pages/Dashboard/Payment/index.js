@@ -4,18 +4,25 @@ import { useState } from 'react';
 
 export default function Payment() {
   const [isOnline, setIsOnline] = useState(null);
-  console.log(isOnline);
 
   return (
     <>
       <StyledTypography variant="h4">Ingresso e pagamento</StyledTypography>
       <Advise>Primeiro, escolha sua modalidade de ingresso</Advise>
       <Container>
-        <Ingresso onClick={() => setIsOnline(false)}>
+        <Ingresso
+          onClick={() => setIsOnline(false)}
+          border={!isOnline ? 'none' : '1px solid #cecece'}
+          background={!isOnline ? '#FFEED2' : '#ffffff'}
+        >
           <h6>Presencial</h6>
           <p>R$ 250</p>
         </Ingresso>
-        <Ingresso onClick={() => setIsOnline(true)}>
+        <Ingresso
+          onClick={() => setIsOnline(true)}
+          border={isOnline ? 'none' : '1px solid #cecece'}
+          background={isOnline ? '#FFEED2' : '#ffffff'}
+        >
           <h6>Online</h6>
           <p>R$ 100</p>
         </Ingresso>
@@ -38,7 +45,8 @@ const Container = styled.div`
 `;
 
 const Ingresso = styled.div`
-  border: 1px solid #cecece;
+  border: ${(props) => props.border};
+  background-color: ${(props) => props.background};
   border-radius: 20px;
   height: 145px;
   width: 145px;
@@ -48,6 +56,10 @@ const Ingresso = styled.div`
   justify-content: center;
   margin-top: 20px;
   margin-right: 25px;
+
+  :hover {
+    cursor: pointer;
+  }
 
   h6 {
     font-size: 16px;
