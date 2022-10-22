@@ -1,18 +1,22 @@
 import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
+import { useState } from 'react';
 
 export default function Payment() {
+  const [isOnline, setIsOnline] = useState(null);
+  console.log(isOnline);
+
   return (
     <>
       <StyledTypography variant="h4">Ingresso e pagamento</StyledTypography>
       <Advise>Primeiro, escolha sua modalidade de ingresso</Advise>
       <Container>
-        <Ingresso>
+        <Ingresso onClick={() => setIsOnline(false)}>
           <h6>Presencial</h6>
-          <p>R$ 100</p>
+          <p>R$ 250</p>
         </Ingresso>
-        <Ingresso>
-          <h6>Presencial</h6>
+        <Ingresso onClick={() => setIsOnline(true)}>
+          <h6>Online</h6>
           <p>R$ 100</p>
         </Ingresso>
       </Container>
