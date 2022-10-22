@@ -3,7 +3,8 @@ import Typography from '@material-ui/core/Typography';
 import { useState } from 'react';
 
 export default function Payment() {
-  const [isOnline, setIsOnline] = useState(null);
+  const [isPresencial, setIsPresencial] = useState(null);
+  const [isWithHotel, setIsWithHotel] = useState(null);
 
   return (
     <>
@@ -11,22 +12,45 @@ export default function Payment() {
       <Advise>Primeiro, escolha sua modalidade de ingresso</Advise>
       <Container>
         <Ingresso
-          onClick={() => setIsOnline(false)}
-          border={!isOnline ? 'none' : '1px solid #cecece'}
-          background={!isOnline ? '#FFEED2' : '#ffffff'}
+          onClick={() => setIsPresencial(true)}
+          border={isPresencial ? 'none' : '1px solid #cecece'}
+          background={isPresencial ? '#FFEED2' : '#ffffff'}
         >
           <h6>Presencial</h6>
           <p>R$ 250</p>
         </Ingresso>
         <Ingresso
-          onClick={() => setIsOnline(true)}
-          border={isOnline ? 'none' : '1px solid #cecece'}
-          background={isOnline ? '#FFEED2' : '#ffffff'}
+          onClick={() => setIsPresencial(false)}
+          border={!isPresencial ? 'none' : '1px solid #cecece'}
+          background={!isPresencial ? '#FFEED2' : '#ffffff'}
         >
           <h6>Online</h6>
           <p>R$ 100</p>
         </Ingresso>
       </Container>
+      {isPresencial ? (
+        <>
+          <Advise>Ótimo! Agora escolha sua modalidade de hospedagem</Advise>
+          <Container>
+            <Ingresso
+              onClick={() => setIsWithHotel(false)}
+              border={!isWithHotel ? 'none' : '1px solid #cecece'}
+              background={!isWithHotel ? '#FFEED2' : '#ffffff'}
+            >
+              <h6>Sem Hotel</h6>
+              <p>+ R$ 0</p>
+            </Ingresso>
+            <Ingresso
+              onClick={() => setIsWithHotel(true)}
+              border={isWithHotel ? 'none' : '1px solid #cecece'}
+              background={isWithHotel ? '#FFEED2' : '#ffffff'}
+            >
+              <h6>Com Hotel</h6>
+              <p>+ R$ 350</p>
+            </Ingresso>
+          </Container>
+        </>
+      ) : null}
     </>
   );
 }
@@ -42,6 +66,7 @@ const Advise = styled.p`
 
 const Container = styled.div`
   display: flex;
+  margin-bottom: 20px;
 `;
 
 const Ingresso = styled.div`
