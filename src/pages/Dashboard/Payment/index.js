@@ -21,8 +21,8 @@ export default function Payment() {
         </Ingresso>
         <Ingresso
           onClick={() => setIsPresencial(false)}
-          border={!isPresencial ? 'none' : '1px solid #cecece'}
-          background={!isPresencial ? '#FFEED2' : '#ffffff'}
+          border={!isPresencial && isPresencial !== null ? 'none' : '1px solid #cecece'}
+          background={!isPresencial && isPresencial !== null ? '#FFEED2' : '#ffffff'}
         >
           <h6>Online</h6>
           <p>R$ 100</p>
@@ -34,8 +34,8 @@ export default function Payment() {
           <Container>
             <Ingresso
               onClick={() => setIsWithHotel(false)}
-              border={!isWithHotel ? 'none' : '1px solid #cecece'}
-              background={!isWithHotel ? '#FFEED2' : '#ffffff'}
+              border={!isWithHotel && isWithHotel !== null ? 'none' : '1px solid #cecece'}
+              background={!isWithHotel && isWithHotel !== null ? '#FFEED2' : '#ffffff'}
             >
               <h6>Sem Hotel</h6>
               <p>+ R$ 0</p>
