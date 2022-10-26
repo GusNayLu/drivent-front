@@ -116,7 +116,7 @@
           "after": true
         }
       ],
-      "no-console": "warn"
+      "no-console": "off"
     }
   },
   "browserslist": {
