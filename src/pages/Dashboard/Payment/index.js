@@ -1,56 +1,76 @@
 import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+import useEnrollment from '../../../hooks/api/useEnrollment';
 
 export default function Payment() {
   const [isPresencial, setIsPresencial] = useState(null);
   const [isWithHotel, setIsWithHotel] = useState(null);
+  const [isSubscribed, setIsSubscribed] = useState(false);
+  const { enrollment } = useEnrollment();
+
+  useEffect(() => {
+    if (enrollment) {
+      setIsSubscribed(true);
+    }
+  }, [enrollment]);
 
   return (
     <>
       <StyledTypography variant="h4">Ingresso e pagamento</StyledTypography>
-      <Advise>Primeiro, escolha sua modalidade de ingresso</Advise>
-      <Container>
-        <Ingresso
-          onClick={() => setIsPresencial(true)}
-          border={isPresencial ? 'none' : '1px solid #cecece'}
-          background={isPresencial ? '#FFEED2' : '#ffffff'}
-        >
-          <h6>Presencial</h6>
-          <p>R$ 250</p>
-        </Ingresso>
-        <Ingresso
-          onClick={() => setIsPresencial(false)}
-          border={!isPresencial && isPresencial !== null ? 'none' : '1px solid #cecece'}
-          background={!isPresencial && isPresencial !== null ? '#FFEED2' : '#ffffff'}
-        >
-          <h6>Online</h6>
-          <p>R$ 100</p>
-        </Ingresso>
-      </Container>
-      {isPresencial ? (
+      {isSubscribed ? (
         <>
-          <Advise>Ótimo! Agora escolha sua modalidade de hospedagem</Advise>
+          <Advise>Primeiro, escolha sua modalidade de ingresso</Advise>
           <Container>
             <Ingresso
-              onClick={() => setIsWithHotel(false)}
-              border={!isWithHotel && isWithHotel !== null ? 'none' : '1px solid #cecece'}
-              background={!isWithHotel && isWithHotel !== null ? '#FFEED2' : '#ffffff'}
+              onClick={() => setIsPresencial(true)}
+              border={isPresencial ? 'none' : '1px solid #cecece'}
+              background={isPresencial ? '#FFEED2' : '#ffffff'}
             >
-              <h6>Sem Hotel</h6>
-              <p>+ R$ 0</p>
+              <h6>Presencial</h6>
+              <p>R$ 250</p>
             </Ingresso>
             <Ingresso
-              onClick={() => setIsWithHotel(true)}
-              border={isWithHotel ? 'none' : '1px solid #cecece'}
-              background={isWithHotel ? '#FFEED2' : '#ffffff'}
+              onClick={() => setIsPresencial(false)}
+              border={!isPresencial && isPresencial !== null ? 'none' : '1px solid #cecece'}
+              background={!isPresencial && isPresencial !== null ? '#FFEED2' : '#ffffff'}
             >
-              <h6>Com Hotel</h6>
-              <p>+ R$ 350</p>
+              <h6>Online</h6>
+              <p>R$ 100</p>
             </Ingresso>
           </Container>
+          {isPresencial ? (
+            <>
+              <Advise>Ótimo! Agora escolha sua modalidade de hospedagem</Advise>
+              <Container>
+                <Ingresso
+                  onClick={() => setIsWithHotel(false)}
+                  border={!isWithHotel && isWithHotel !== null ? 'none' : '1px solid #cecece'}
+                  background={!isWithHotel && isWithHotel !== null ? '#FFEED2' : '#ffffff'}
+                >
+                  <h6>Sem Hotel</h6>
+                  <p>+ R$ 0</p>
+                </Ingresso>
+                <Ingresso
+                  onClick={() => setIsWithHotel(true)}
+                  border={isWithHotel ? 'none' : '1px solid #cecece'}
+                  background={isWithHotel ? '#FFEED2' : '#ffffff'}
+                >
+                  <h6>Com Hotel</h6>
+                  <p>+ R$ 350</p>
+                </Ingresso>
+              </Container>
+            </>
+          ) : null}
         </>
-      ) : null}
+      ) : (
+        <Advise>
+          Você precisa completar sua inscrição antes
+          <br />
+          de prosseguir pra escolha de ingresso
+        </Advise>
+      )}
     </>
   );
 }
@@ -62,6 +82,15 @@ const StyledTypography = styled(Typography)`
 const Advise = styled.p`
   font-size: 20px;
   color: #8e8e8e;
+
+  &:last-child {
+    text-align: center;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 `;
 
 const Container = styled.div`
