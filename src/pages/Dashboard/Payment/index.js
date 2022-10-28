@@ -7,11 +7,13 @@ import Button from '../../../components/Form/Button';
 export default function Payment() {
   const [isPresencial, setIsPresencial] = useState(null);
   const [isWithHotel, setIsWithHotel] = useState(null);
-  const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(null);
   const { enrollment } = useEnrollment();
-  const [isConfirmed, setIsConfirmed] = useState(false);
+  const [isConfirmed, setIsConfirmed] = useState(null);
   const [ticketType, setTicketType] = useState(null);
   const [ticketCost, setTicketCost] = useState(null);
+
+  console.log(isPresencial, isWithHotel);
 
   useEffect(() => {
     if (enrollment) {
@@ -103,7 +105,7 @@ export default function Payment() {
               </Container>
             </>
           ) : null}
-          {(isPresencial !== null && isWithHotel !== null) || !isPresencial ? (
+          {(isPresencial !== null && isWithHotel !== null) || isPresencial === false ? (
             <>
               <Advise>
                 Fechado! O total ficou em <span>R$ {ticketCost}</span>. Agora é só confirmar:
