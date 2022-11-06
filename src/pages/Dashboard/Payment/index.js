@@ -1,14 +1,38 @@
 import styled from 'styled-components';
 import Typography from '@material-ui/core/Typography';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import useEnrollment from '../../../hooks/api/useEnrollment';
 import Button from '../../../components/Form/Button';
 
 export default function Payment() {
   const [isPresencial, setIsPresencial] = useState(null);
   const [isWithHotel, setIsWithHotel] = useState(null);
-  const [isConfirmed, setIsConfirmed] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(null);
+  const { enrollment } = useEnrollment();
+  const [isConfirmed, setIsConfirmed] = useState(null);
   const [ticketType, setTicketType] = useState(null);
   const [ticketCost, setTicketCost] = useState(null);
+
+  console.log(isPresencial, isWithHotel);
+
+  useEffect(() => {
+    if (enrollment) {
+      setIsSubscribed(true);
+    }
+  }, [enrollment]);
+
+  if (!isSubscribed) {
+    return (
+      <>
+        <StyledTypography variant="h4">Ingresso e pagamento</StyledTypography>
+        <Advise>
+          Você precisa completar sua inscrição antes
+          <br />
+          de prosseguir pra escolha de ingresso
+        </Advise>
+      </>
+    );
+  }
 
   return (
     <>
@@ -43,8 +67,8 @@ export default function Payment() {
                 setTicketType('Online');
                 setTicketCost('100');
               }}
-              border={!isPresencial ? 'none' : '1px solid #cecece'}
-              background={!isPresencial ? '#FFEED2' : '#ffffff'}
+              border={isPresencial === false ? 'none' : '1px solid #cecece'}
+              background={isPresencial === false ? '#FFEED2' : '#ffffff'}
             >
               <h6>Online</h6>
               <p>R$ 100</p>
@@ -60,8 +84,8 @@ export default function Payment() {
                     setTicketType('Presencial + Sem Hotel');
                     setTicketCost('250');
                   }}
-                  border={!isWithHotel ? 'none' : '1px solid #cecece'}
-                  background={!isWithHotel ? '#FFEED2' : '#ffffff'}
+                  border={isWithHotel === false ? 'none' : '1px solid #cecece'}
+                  background={isWithHotel === false ? '#FFEED2' : '#ffffff'}
                 >
                   <h6>Sem Hotel</h6>
                   <p>+ R$ 0</p>
@@ -81,7 +105,7 @@ export default function Payment() {
               </Container>
             </>
           ) : null}
-          {isPresencial !== null ? (
+          {(isPresencial !== null && isWithHotel !== null) || isPresencial === false ? (
             <>
               <Advise>
                 Fechado! O total ficou em <span>R$ {ticketCost}</span>. Agora é só confirmar:
@@ -106,6 +130,15 @@ const StyledTypography = styled(Typography)`
 const Advise = styled.p`
   font-size: 20px;
   color: #8e8e8e;
+
+  &:last-child {
+    text-align: center;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 
   span {
     font-weight: bold;
